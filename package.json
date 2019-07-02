@@ -1,0 +1,28 @@
+{
+  "name": "pair-project-7",
+  "version": "1.0.0",
+  "description": "happy pair project",
+  "main": "app.js",
+  "dependencies": {
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "flash": "^1.1.0",
+    "pg": "^7.11.0",
+    "sequelize": "^5.9.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/indinabilah/pair-project-7.git"
+  },
+  "keywords": [],
+  "author": "PairProject7",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/indinabilah/pair-project-7/issues"
+  },
+  "homepage": "https://github.com/indinabilah/pair-project-7#readme"
+}
