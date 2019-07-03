@@ -2,10 +2,11 @@ let Model = require("../models/index")
 
 class Movie{
     static findAll(req, res){
+        console.log(req.session, 'session di movie')
         Model.Movie.findAll()
         .then(data => {
             // res.send(data)
-            res.render("movie-all.ejs", {dataMovie: data, dataFind: {name:null}})
+            res.render("movie-all.ejs", {dataMovie: data, dataFind: {name: null}})
         })
         .catch(err => {
             res.send(err.message)

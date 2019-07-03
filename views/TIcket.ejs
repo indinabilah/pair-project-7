@@ -145,12 +145,12 @@
             <label for="name">Name: </label><br>
             <input type="text" name="name" disabled value="<%= dataMovie.name %>"> <br>
             <label for="seat">Seat: </label><br>
-            <input type="text" id="selectedSeats" name="seat" > <br>
+            <input type="text" id="selectedSeats" disabled name="seat" > <br>
             <label for="title">Movie Title: </label><br>
             <h3><label for="movie_name"><%= dataMovie.movie_name %></label></h3><br>
             <br>
             <label for="total_price">Total Price: </label>
-            <input type="number" name="total_price" id="PriceMovie" value="<%= dataMovie.price %>"> <br>
+            <input type="number" name="total_price" disabled id="PriceMovie" value="<%= dataMovie.price %>"> <br>
             <br>
             <button type="submit" class="btn btn-info">Checkout</button>
         </form>
@@ -328,25 +328,19 @@
                 if(seats[i].classList.contains('disabled')){
                     seats[i].classList.toggle('disabled')
                     selectedSeats.splice(selectedSeats.indexOf(inputs[0].id),1)
-                    // Harga -= setHarga
                     setHarga.value = Harga * selectedSeats.length
                 }
                 else{                    
                     selectedSeats.push(inputs[0].id)
                     seats[i].classList.add('disabled')
-                    // Harga += setHarga
-
                     setHarga.value = Harga * selectedSeats.length
                 }
                 setSeatInput();
                 
             })
         }
-
         function setSeatInput(){
             selectedSeatsInput.value = selectedSeats
-            
-            // Harga = Number(Harga)
         }
         
     </script>
