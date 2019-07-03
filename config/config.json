@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "indinabilah",
-    "password": null,
+    "username": "postgres",
+    "password": "12345678",
     "database": "db-bioskop",
     "host": "127.0.0.1",
     "dialect": "postgres"
