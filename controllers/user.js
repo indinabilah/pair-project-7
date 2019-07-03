@@ -22,15 +22,25 @@ class User{
         })
     }
     static login(req, res){
-        Model.User.findOne({
-            where:{ email: req.body.email}
-        })
-        .then(data => {
-            res.redirect("/home")
-        })
-        .catch(err => {
-            res.send(err.message)
-        })
+        if(req.sessionID){
+            Model.User.findOne({
+                where:{ email: req.body.email}
+            })
+            .then(data => {
+                // res.send([req.session, req.sessionID])
+                // res.send(data)
+                res.render("home.ejs", {data: 'Berhasil Login!', dataFind: data})
+            })
+            .catch(err => {
+                res.send(err.message)
+            })
+        }else{
+            res.send([req.sessionID, 'Login dulu'])
+        }
+    }
+    static logout(req, res){
+        req.sessionID = null
+        res.redirect("/user/login")
     }
 }
 
