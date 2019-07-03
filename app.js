@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const port = 3001
 const router = require('./routes/all-router')
+
 const session = require('express-session')
 
 app.use(express.urlencoded({extended: false}))
@@ -24,3 +25,8 @@ app.get("/logout", (req, res)=>{
 
 app.use("/", router.User)
 app.use("/", router.Transaction)
+app.use("/ticket" ,routerTicket);
+app.use("/movie" , routerMovie );
+app.get("/home", (req, res)=>{
+    res.render("home.ejs")
+})
