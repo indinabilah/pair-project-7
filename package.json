@@ -4,8 +4,10 @@
   "description": "happy pair project",
   "main": "app.js",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "ejs": "^2.6.2",
     "express": "^4.17.1",
+    "express-session": "^1.16.2",
     "flash": "^1.1.0",
     "pg": "^7.11.0",
     "sequelize": "^5.9.1"
