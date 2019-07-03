@@ -50,8 +50,9 @@ class User{
         }
     }
     static logout(req, res){
-        req.session.destroy()
-        res.redirect("/")
+        req.session.destroy(err => {
+            res.redirect("/")
+        })
     }
     static list(req, res){
         Model.User.findAll()
