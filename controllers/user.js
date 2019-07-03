@@ -37,7 +37,7 @@ class User{
                     res.render("user-admin.ejs", {data: 'Berhasil Login!', dataFind: newData})
                 }else if(bcrypt.compareSync(req.body.password,data.password)){
                     //data.password === req.body.password
-                    res.render("user-admin.ejs", {data: 'Berhasil Login!', dataFind: newData})
+                    res.render("home.ejs", {data: 'Berhasil Login!', dataFind: newData})
                 }else{
                     res.render("user-login.ejs", {data: 'Gagal Login. email & password salah'})
                 }

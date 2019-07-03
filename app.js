@@ -24,3 +24,4 @@ app.get("/logout", (req, res)=>{
 
 app.use("/", router.User)
 app.use("/", router.Transaction)
+app.use("/", router.Movie)
