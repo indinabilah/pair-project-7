@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style>
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        th, td {
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {background-color: #f2f2f2;}
+        </style>
+<table>
+    <tr>
+        <th>id</th>
+        <th>Movie Name</th>
+        <th>Price</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <% movie.map((hasil)=>{ %>
+        <% if(hasil.dataValues.id == idMovie) { %>
+            <tr>
+                <form action="/movie/edit/<%= hasil.dataValues.id %>" method="POST">
+                    <th><%= hasil.dataValues.id %></th>
+                    <th><br><input type="text"  value="<%= hasil.dataValues.movie_name %>" name="movie"></th>
+                    <th><br><input type="number"  value="<%= hasil.dataValues.price %>"  name="price" ></th>
+                    <th><input type="submit" value="SAVE"></th>
+                    <th><a href="/movie/list/0">Cancel</a></th>
+                </form>
+            </tr>
+        <% } else {%>
+            <tr>
+                <th><%= hasil.dataValues.id %></th>
+                <th><%= hasil.dataValues.movie_name %></th>
+                <th><%= hasil.dataValues.price %></th>
+                <th><a href="/movie/list/<%= hasil.dataValues.id %>">Edit</a></th>
+                <th><a href="/movie/delete/<%= hasil.dataValues.id %>">Delete</a></th>
+            </tr>
+        <% }%>
+    
+    <% }) %>
+</table>
+
+<form action="/movie/addMovie" method="POST">
+    <input type="text" name="movie">
+    <input type="number" name="price">
+    <input type="submit">
+</form>
+
+<!-- <input> -->

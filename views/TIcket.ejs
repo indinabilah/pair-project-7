@@ -315,16 +315,16 @@
         <!-- </form> -->
     </div> 
     <center>
-        <form action="/ticket" method="GET">
+        <form action="/ticket/addTicket" method="GET">
             <label for="name">Name: </label><br>
             <input type="text" name="name" disabled value="Indinabilah"> <br>
             <label for="seat">Seat: </label><br>
-            <input type="text" id="selectedSeats" name="seat" value="<%= id %>"> <br>
+            <input type="text" id="selectedSeats" name="seat" > <br>
             <label for="title">Movie Title: </label><br>
             <input type="text" name="title" disabled value="How to train your dragon"> <br>
             <br>
             <label for="total_price">Total Price: </label>
-            <input type="text" name="total_price" disabled value="Rp. 100000"> <br>
+            <input type="number" name="total_price" id="PriceMovie" > <br>
             <br>
             <button type="submit" class="btn btn-info">Checkout</button>
         </form>
@@ -332,8 +332,11 @@
     <!-- </form> -->
     <script>
         const selectedSeats = [];
+        const totalPrice = 0
         const seats = document.getElementsByClassName('seat');
         const selectedSeatsInput = document.getElementById('selectedSeats')
+        let Harga = 0
+        let setHarga = document.getElementById('PriceMovie')
         for(let i = 0; i<seats.length;i++){
             seats[i].addEventListener('click', (e) => {
                 e.preventDefault()
@@ -341,10 +344,14 @@
                 if(seats[i].classList.contains('disabled')){
                     seats[i].classList.toggle('disabled')
                     selectedSeats.splice(selectedSeats.indexOf(inputs[0].id),1)
+                    Harga -= 50000
+                    setHarga.value = `${Harga}`
                 }
                 else{                    
                     selectedSeats.push(inputs[0].id)
                     seats[i].classList.add('disabled')
+                    Harga += 50000
+                    setHarga.value = `${Harga}`
                 }
                 setSeatInput();
                 
@@ -353,6 +360,8 @@
 
         function setSeatInput(){
             selectedSeatsInput.value = selectedSeats
+            
+            // Harga = Number(Harga)
         }
         
     </script>
