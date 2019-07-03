@@ -13,20 +13,23 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: { 
-        maxAge: 1000000000
+        secure: true,
+        maxAge: 100
      }
 }))
 
 app.get("/logout", (req, res)=>{
-    req.session.destroy()
+    req.session.destroy(err => {
+        res.redirect("/user/login")
+    })
     // res.send(["Berhasil logout!"])
-    res.redirect("/user/login")
 })
 
 app.use("/", router.User)
 app.use("/", router.Transaction)
-app.use("/ticket" ,routerTicket);
-app.use("/movie" , routerMovie );
+app.use("/", router.Ticket)
+app.use("/", router.Movie)
+
 app.get("/home", (req, res)=>{
     res.render("home.ejs")
 })

@@ -14,7 +14,7 @@
     <style>
         body {
             font-size: 16px;
-            background-color: #e7b7d5;
+            /* background-color: #e7b7d5; */
         }
         .theatre {
             margin: 20px auto;
@@ -136,25 +136,24 @@
 </head>
 <body>
     <!-- <form action="/ticket/tes" method="GET"> -->
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#">Mini Cinema</a>
-          </div>
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="/home">Home</a></li>
-            <li><a href="#">Movie</a></li>
-            <li><a href="/seats">Buy Ticket</a></li>
-            <li><a href="/tickets">Check Ticket</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-              <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up </a></li>
-              <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login </a></li>
-          </ul>
-        </div>
-    </nav>
+      <%- include('partials/navbar.ejs') %>
     <center>
         <h2>Seats</h2>
+    </center>
+    <center>
+        <form action="/ticket/addTicket" method="GET">
+            <label for="name">Name: </label><br>
+            <input type="text" name="name" disabled value="<%= dataMovie.name %>"> <br>
+            <label for="seat">Seat: </label><br>
+            <input type="text" id="selectedSeats" disabled name="seat" > <br>
+            <label for="title">Movie Title: </label><br>
+            <h3><label for="movie_name"><%= dataMovie.movie_name %></label></h3><br>
+            <br>
+            <label for="total_price">Total Price: </label>
+            <input type="number" name="total_price" disabled id="PriceMovie" value="<%= dataMovie.price %>"> <br>
+            <br>
+            <button type="submit" class="btn btn-info">Checkout</button>
+        </form>
     </center>
     <div class="theatre">
         <div class="screen-side">
@@ -314,29 +313,14 @@
         </div>
         <!-- </form> -->
     </div> 
-    <center>
-        <form action="/ticket/addTicket" method="GET">
-            <label for="name">Name: </label><br>
-            <input type="text" name="name" disabled value="Indinabilah"> <br>
-            <label for="seat">Seat: </label><br>
-            <input type="text" id="selectedSeats" name="seat" > <br>
-            <label for="title">Movie Title: </label><br>
-            <input type="text" name="title" disabled value="How to train your dragon"> <br>
-            <br>
-            <label for="total_price">Total Price: </label>
-            <input type="number" name="total_price" id="PriceMovie" > <br>
-            <br>
-            <button type="submit" class="btn btn-info">Checkout</button>
-        </form>
-    </center>
     <!-- </form> -->
     <script>
         const selectedSeats = [];
         const totalPrice = 0
         const seats = document.getElementsByClassName('seat');
         const selectedSeatsInput = document.getElementById('selectedSeats')
-        let Harga = 0
         let setHarga = document.getElementById('PriceMovie')
+        let Harga = <%= dataMovie.price %>;
         for(let i = 0; i<seats.length;i++){
             seats[i].addEventListener('click', (e) => {
                 e.preventDefault()
@@ -344,24 +328,19 @@
                 if(seats[i].classList.contains('disabled')){
                     seats[i].classList.toggle('disabled')
                     selectedSeats.splice(selectedSeats.indexOf(inputs[0].id),1)
-                    Harga -= 50000
-                    setHarga.value = `${Harga}`
+                    setHarga.value = Harga * selectedSeats.length
                 }
                 else{                    
                     selectedSeats.push(inputs[0].id)
                     seats[i].classList.add('disabled')
-                    Harga += 50000
-                    setHarga.value = `${Harga}`
+                    setHarga.value = Harga * selectedSeats.length
                 }
                 setSeatInput();
                 
             })
         }
-
         function setSeatInput(){
             selectedSeatsInput.value = selectedSeats
-            
-            // Harga = Number(Harga)
         }
         
     </script>

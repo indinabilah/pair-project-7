@@ -5,6 +5,9 @@ class User{
         res.render("user-login.ejs")
     }
     static getAdminPage(req, res){
+        if(!req.session.user){
+            res.redirect('/user/login')
+        }
         res.render("user-admin.ejs")
     }
     static getRegister(req, res){
@@ -26,18 +29,32 @@ class User{
     }
     static login(req, res){
         let newData
-        if(req.sessionID){
+        if(req.session){
             Model.User.findOne({
                 where:{ email: req.body.email}
             })
             .then(data => {
-                // res.send(data)
-                newData = data
+                // // res.send(data)
+                // req.session.user = {
+                    //     id: data.id,
+                    //     name: data.name
+                    // }
+                    // res.send(req.session)
+                    newData = data
                 if(data.role === "admin" && data.password === req.body.password){
+                        req.session.user = {
+                            id: data.id,
+                            name: data.name
+                        }
                     res.render("user-admin.ejs", {data: 'Berhasil Login!', dataFind: newData})
                 }else if(bcrypt.compareSync(req.body.password,data.password)){
                     //data.password === req.body.password
-                    res.render("user-admin.ejs", {data: 'Berhasil Login!', dataFind: newData})
+                    req.session.user = {
+                        id: data.id,
+                        name: data.name
+                    }
+                    res.redirect("/movie/list")
+                    // console.log(req.session, 'login session')
                 }else{
                     res.render("user-login.ejs", {data: 'Gagal Login. email & password salah'})
                 }
@@ -50,8 +67,16 @@ class User{
         }
     }
     static logout(req, res){
-        req.session.destroy()
-        res.redirect("/")
+        // setInterval(()=>{
+        //     req.session.destroy()
+        //     res.redirect("/")
+        // },1000)
+        req.session.destroy(function(err){
+            console.log('session')
+            res.redirect("/user/login")
+        })
+
+        console.log('after session')
     }
     static list(req, res){
         Model.User.findAll()
