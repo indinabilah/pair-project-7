@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Document</title>
+    <%- include('partials/css-login-register.ejs')%>
+</head>
+<body>
+    <%- include('partials/navbar-admin.ejs') %>
+    <div class="container">
+        <table class="table table-bordered">
+            <tr>
+                <th> ID </th>
+                <th> Name </th>
+                <th> Email </th>
+                <th> Role </th>
+                <th> Action </th>
+            </tr>
+            <% dataFind.forEach(el=>{%>
+            <tr>
+                <td><%= el.id%></td>
+                <td><%= el.name%></td>
+                <td><%= el.email%></td>
+                <td><%= el.role%></td>
+                <td>
+                    <a href="">delete</a> 
+                    <%if(el.role === 'admin'){%>
+                        | <a href="">update</a>
+                    <%}%>
+                </td>
+            </tr>
+            <%})%>
+        </table>
+    </div>
+</body>
+</html>

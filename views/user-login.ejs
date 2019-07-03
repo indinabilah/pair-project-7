@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <title>Document</title>
-    <%- include('css-login-register.ejs')%>
+    <%- include('partials/css-login-register.ejs')%>
 </head>
 <body>
     <div class="container">
@@ -21,6 +21,8 @@
                 <input type="email" placeholder="e-mail" name="email" autofocus />
                 <input type="password" placeholder="Password" name="password" autofocus />
                 <button type="submit" class="btn btn-secondary" id="submit">login</button>
+                <a href="/user/register"><span class="btn btn-secondary"></span>Register</a>
+
             </div>
         </form>
     </div>

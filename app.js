@@ -12,17 +12,15 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: { 
-        secure: true
+        maxAge: 1000000000
      }
 }))
-// app.get("/home", (req, res)=>{
-//     req.sessionID = null
-//     if(req.sessionID){
-//         // res.send([req.sessionID])
-//         res.render("home.ejs")
-//     }else{
-//         res.send([req.session, req.sessionID, 'Login dulu'])
-//     }
-// })
+
+app.get("/logout", (req, res)=>{
+    req.session.destroy()
+    // res.send(["Berhasil logout!"])
+    res.redirect("/user/login")
+})
 
 app.use("/", router.User)
+app.use("/", router.Transaction)
