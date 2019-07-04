@@ -29,17 +29,17 @@ class User{
     }
     static login(req, res){
         let newData
-        if(req.session){
+        if(req.sessionID){
             Model.User.findOne({
                 where:{ email: req.body.email}
             })
             .then(data => {
-                // // res.send(data)
-                // req.session.user = {
-                    //     id: data.id,
-                    //     name: data.name
-                    // }
-                    // res.send(req.session)
+                newData = data
+                if(data.role === "admin" && data.password === req.body.password){
+                    res.render("user-admin.ejs", {data: 'Berhasil Login!', dataFind: newData})
+                }else if(bcrypt.compareSync(req.body.password,data.password)){
+                    //data.password === req.body.password
+                    res.render("home.ejs", {data: 'Berhasil Login!', dataFind: newData})
                     newData = data
                 if(data.role === "admin" && data.password === req.body.password){
                         req.session.user = {
@@ -48,7 +48,6 @@ class User{
                         }
                     res.render("user-admin.ejs", {data: 'Berhasil Login!', dataFind: newData})
                 }else if(bcrypt.compareSync(req.body.password,data.password)){
-                    //data.password === req.body.password
                     req.session.user = {
                         id: data.id,
                         name: data.name
@@ -67,16 +66,8 @@ class User{
         }
     }
     static logout(req, res){
-        // setInterval(()=>{
-        //     req.session.destroy()
-        //     res.redirect("/")
-        // },1000)
-        req.session.destroy(function(err){
-            console.log('session')
-            res.redirect("/user/login")
-        })
-
-        console.log('after session')
+        req.session.destroy()
+        res.redirect("/")
     }
     static list(req, res){
         Model.User.findAll()

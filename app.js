@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 3001
+const port = 3000
 const router = require('./routes/all-router')
 
 const session = require('express-session')
@@ -17,7 +17,6 @@ app.use(session({
         maxAge: 100
      }
 }))
-
 app.get("/logout", (req, res)=>{
     req.session.destroy(err => {
         res.redirect("/user/login")
