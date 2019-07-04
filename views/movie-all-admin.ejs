@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <title>Document</title>
+    <title>Bicket</title>
 </head>
 <body>
         <%- include('partials/navbar-admin.ejs') %>
@@ -17,10 +17,11 @@
         <br>
         <br>
         <br>
+    </center>
         <div class="container">
+          <% dataMovie.forEach(el => {%>
           <div class="row">
-              <% dataMovie.forEach(el => {%>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
               <%if(el.image){%>
                 <img src="<%= el. image%>" class="mx-auto d-block" style="width:30%">
               <%}else{%>
@@ -31,10 +32,9 @@
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
               <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
             </div>
-          <%})%>
+            <%})%>
           </div>
         </div>
-    </center>
 </body>
 </html>
 
