@@ -1,9 +1,12 @@
 let Model = require('../models/index')
-
+let bcrypt = require('bcrypt')
 class User{
-    // static getPage(req, res){
-    //     res.render("user-login.ejs", {msg: 'Silahkan Login ..'})
-    // }
+    static getPage(req, res){
+        res.render("user-login.ejs")
+    }
+    static getAdminPage(req, res){
+        res.render("user-admin.ejs")
+    }
     static getRegister(req, res){
         res.render("user-register.ejs")
     }
@@ -22,14 +25,22 @@ class User{
         })
     }
     static login(req, res){
+        let newData
         if(req.sessionID){
             Model.User.findOne({
                 where:{ email: req.body.email}
             })
             .then(data => {
-                // res.send([req.session, req.sessionID])
                 // res.send(data)
-                res.render("home.ejs", {data: 'Berhasil Login!', dataFind: data})
+                newData = data
+                if(data.role === "admin" && data.password === req.body.password){
+                    res.render("user-admin.ejs", {data: 'Berhasil Login!', dataFind: newData})
+                }else if(bcrypt.compareSync(req.body.password,data.password)){
+                    //data.password === req.body.password
+                    res.render("home.ejs", {data: 'Berhasil Login!', dataFind: newData})
+                }else{
+                    res.render("user-login.ejs", {data: 'Gagal Login. email & password salah'})
+                }
             })
             .catch(err => {
                 res.send(err.message)
@@ -39,8 +50,17 @@ class User{
         }
     }
     static logout(req, res){
-        req.sessionID = null
-        res.redirect("/user/login")
+        req.session.destroy()
+        res.redirect("/")
+    }
+    static list(req, res){
+        Model.User.findAll()
+        .then(data => {
+            res.render("user-admin-list.ejs", {dataFind: data})
+        })
+        .catch(err => {
+            res.send(err.message)
+        })
     }
 }
 

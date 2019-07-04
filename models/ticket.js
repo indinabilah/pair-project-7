@@ -2,7 +2,10 @@
 module.exports = (sequelize, DataTypes) => {
   const Model = sequelize.Sequelize.Model
   class Ticket extends Model{
-    static associate(models){}
+    static associate(models){
+      Ticket.belongsTo(models.Transaction)
+      Ticket.belongsTo(models.Movie)
+    }
   }
   Ticket.init({
     TransactionId:{

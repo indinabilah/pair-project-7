@@ -1,8 +1,12 @@
 'use strict';
+const bcrypt = require('bcrypt')
 module.exports = (sequelize, DataTypes) => {
   const Model = sequelize.Sequelize.Model
   class User extends Model{
-    static associate(models){}
+    static associate(models){
+      User.hasMany(models.Transaction)
+      User.belongsToMany(models.Movie, {through: "Tiket"})
+    }
   }
   User.init({
     name:{
@@ -26,6 +30,14 @@ module.exports = (sequelize, DataTypes) => {
     password:{
       type: DataTypes.STRING,
       allowNull: false
+    },
+    role:{
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    isLogin:{
+      type: DataTypes.STRING,
+      allowNull: true
     }
   }, {
     hooks: {
