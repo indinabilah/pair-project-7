@@ -26,11 +26,17 @@ class User{
     }
     static login(req, res){
         let newData
-        if(req.session){
+        if(req.sessionID){
             Model.User.findOne({
                 where:{ email: req.body.email}
             })
             .then(data => {
+                newData = data
+                if(data.role === "admin" && data.password === req.body.password){
+                    res.render("user-admin.ejs", {data: 'Berhasil Login!', dataFind: newData})
+                }else if(bcrypt.compareSync(req.body.password,data.password)){
+                    //data.password === req.body.password
+                    res.render("home.ejs", {data: 'Berhasil Login!', dataFind: newData})
                     newData = data
                 if(data.role === "admin"){
                     console.log(data)
