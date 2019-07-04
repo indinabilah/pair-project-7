@@ -7,35 +7,33 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <title>Document</title>
+    <title>Bicket</title>
     <%- include('partials/css-login-register.ejs')%>
 </head>
 <body>
     <%- include('partials/navbar-admin.ejs') %>
-    <p>halaman user-admin-transaction</p>
-    <p><%= data %></p>
     <div class="container">
+        <h3>user-ticket-transaction</h3>
         <table class="table table-bordered">
             <tr>
                 <th>No. </th>
-                <th>Nama</th>
                 <th>ID Transaction</th>
-                <th>Total Transaction</th>
+                <th>Movie</th>
+                <th>Price (per item)</th>
+                <th>Seat</th>
                 <th>Date</th>
-                <th>Total Price</th>
-                <th>Action</th>
             </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                    <a href="">a</a> | <a href="">b</a>
-                </td>
-            </tr>
+            <%let count = 1%>
+            <% data.forEach(el => {%>
+                <tr>
+                    <td><%=count%></td>
+                    <td><%=el.TransactionId%></td>
+                    <td><%=el.MovieId%></td>
+                    <td><%=Helper(el.price)%></td>
+                    <td><%=el.seat%></td>
+                    <td><%=el.createdAt%></td>
+                </tr>
+            <% count++})%>
         </table>
     </div>
 </body>

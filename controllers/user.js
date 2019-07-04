@@ -5,9 +5,6 @@ class User{
         res.render("user-login.ejs")
     }
     static getAdminPage(req, res){
-        if(!req.session.user){
-            res.redirect('/user/login')
-        }
         res.render("user-admin.ejs")
     }
     static getRegister(req, res){
@@ -34,30 +31,28 @@ class User{
                 where:{ email: req.body.email}
             })
             .then(data => {
-<<<<<<< HEAD
-=======
                 newData = data
                 if(data.role === "admin" && data.password === req.body.password){
                     res.render("user-admin.ejs", {data: 'Berhasil Login!', dataFind: newData})
                 }else if(bcrypt.compareSync(req.body.password,data.password)){
                     //data.password === req.body.password
                     res.render("home.ejs", {data: 'Berhasil Login!', dataFind: newData})
->>>>>>> 6db3b5f47239af94ddce844f497acffdf6189b39
                     newData = data
-                if(data.role === "admin" && bcrypt.compareSync(req.body.password,data.password)){
+                if(data.role === "admin"){
+                    console.log(data)
+                    if(bcrypt.compareSync(req.body.password,data.password)){
                         req.session.user = {
                             id: data.id,
-                            name: data.name
+                            name: data.name,
+                            role: data.role
                         }
-                    res.render("user-admin.ejs", {data: 'Berhasil Login!', dataFind: newData})
-                }else if(bcrypt.compareSync(req.body.password,data.password)){
-                    req.session.user = {
-                        id: data.id,
-                        name: data.name
+                        console.log(req.session.user.role)
+                        res.render("user-admin.ejs", {data: 'Berhasil Login!', dataFind: newData})
                     }
+                }else if(bcrypt.compareSync(req.body.password,data.password)){
                     res.render("home.ejs", {data: 'Berhasil Login!', dataFind: {name:data.name}})
-                    // console.log(req.session, 'login session')
                 }else{
+                    req.session.user = {}
                     res.render("user-login.ejs", {data: 'Gagal Login. email & password salah'})
                 }
             })
@@ -69,15 +64,8 @@ class User{
         }
     }
     static logout(req, res){
-<<<<<<< HEAD
-        req.session.destroy(function(err){
-            console.log('session')
-            res.redirect("/user/login")
-        })
-=======
         req.session.destroy()
-        res.redirect("/")
->>>>>>> 6db3b5f47239af94ddce844f497acffdf6189b39
+        res.redirect("/user/login")
     }
     static list(req, res){
         Model.User.findAll()

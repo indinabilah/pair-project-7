@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <title>Document</title>
+    <title>Bicket</title>
     <%- include('partials/css-login-register.ejs')%>
 </head>
 <body>
@@ -16,14 +16,17 @@
             <form action="" class="form-container" method="post">
                 <h1>Update</h1>
                 <br>
-                <label for="name"><b>name</b></label><br>
+                <label for="name"><b>name: </b></label><br>
                 <input type="text" placeholder="Enter username" name="name" value="<%= dataUpdate.name%>" required>
                 <br>
-                <label for="email"><b>Email</b></label><br>
+                <label for="email"><b>Email: </b></label><br>
                 <input type="email" placeholder="Enter email" name="email" value="<%= dataUpdate.email%>" required>
                 <br>
                 <br>
-                <p>apabila ingin mengganti password silahkan register ulang hahahaha</p>
+                <br>
+                <label for="role"><b>Admin: </b></label>
+                <input type="checkbox" name="role" id="" value="admin">
+                <br>
                 <br>
                 <button type="submit" class="btn">update</button>
             </form>

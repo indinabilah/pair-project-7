@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Bicket</title>
+    <style>
+            .cardWrap {
+            width: 27em;
+            margin: 3em auto;
+            color: #fff;
+            font-family: sans-serif;
+            }
+    
+            .card {
+            background: linear-gradient(to bottom, #000000 0%, #4f7bcc 26%, #e20e9b 26%, #575555 100%);
+            height: 14em;
+            float: left;
+            position: relative;
+            padding: 1em;
+            }
+    
+            .cardLeft {
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+            width: 16em;
+            }
+    
+            .cardRight {
+            width: 6.5em;
+            border-left: .18em dashed #fff;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;}
+            
+    
+            .barcode {
+            height: 2em;
+            width: 0;
+            margin: 1.2em 0 0 .8em;
+            box-shadow: 1px 0 0 1px #000000,
+            5px 0 0 1px #000000,
+            10px 0 0 1px #000000,
+            11px 0 0 1px #000000,
+            15px 0 0 1px #000000,
+            18px 0 0 1px #000000,
+            22px 0 0 1px #000000,
+            23px 0 0 1px #000000,
+            26px 0 0 1px #000000,
+            30px 0 0 1px #000000,
+            35px 0 0 1px #000000,
+            37px 0 0 1px #000000,
+            41px 0 0 1px #000000,
+            44px 0 0 1px #000000,
+            47px 0 0 1px #000000,
+            51px 0 0 1px #000000,
+            56px 0 0 1px #000000,
+            59px 0 0 1px #000000,
+            64px 0 0 1px #000000,
+            68px 0 0 1px #000000,
+            72px 0 0 1px #000000,
+            74px 0 0 1px #000000,
+            77px 0 0 1px #000000,
+            81px 0 0 1px #000000;
+            }
+        </style>
+</head>
+<body>
+        <%- include('partials/navbar.ejs') %>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="container">
+                    <h3>Your Tickets</h3>
+                    <label for="email">username: <%= data.email %></label><br>
+                    <label for="movie_name">Movie Name: <%=data.movie_name%></label><br>
+                    <label for="seats">Seats: <%=data.seats%></label><br>
+                    <label for="totalPrice">Total Price: <%=digit(data.totalPrice)%></label><br>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <a href="" class="btn btn-danger">Print Ticket</a>
+                <div class="cardWrap">
+                        <%seats.forEach(el=>{%>
+                    <div class="card cardLeft">
+                        <h2>Mini <span>Cinema</span></h2>
+                        <div class="title">
+                            <label for="title">Title: <%=data.movie_name%> </label>
+                        </div>
+                        <div class="seat">
+                            <label for="seat">Esat: <%=el%> </label>
+                        </div>
+                        <div class="time">
+                            <label for="time">Time: 12:00</label>
+                        </div>
+                    </div>
+                    <div class="card cardRight">
+                        <div class="eye"></div>
+                        <div class="number">
+                        <h3><%=el%></h3>
+                        </div>
+                        <br>
+                        <div class="title">
+                            <p><%=data.movie_name%></p>
+                        </div>
+                    </div>   
+                    <%})%>
+                </div>
+            </div>
+        </div>
+    </div>
+    <center>
+        <div>
+            <%seats.forEach(el=>{%>
+            <div class="cardWrap">
+                <div class="card cardLeft">
+                    <h2>Mini <span>Cinema</span></h2>
+                    <div class="title">
+                        <label for="title">Title: <%=data.movie_name%> </label>
+                    </div>
+                    <div class="seat">
+                        <label for="seat">Esat: <%=el%> </label>
+                    </div>
+                    <div class="time">
+                        <label for="time">Time: 12:00</label>
+                    </div>
+                </div>
+                <div class="card cardRight">
+                    <div class="eye"></div>
+                    <div class="number">
+                    <h3><%=el%></h3>
+                    </div>
+                    <br>
+                    <div class="title">
+                        <p><%=data.movie_name%></p>
+                    </div>
+                </div>   
+            </div>
+            <%})%>
+        </div>
+    </center>
+</body>
+</html>
+
+

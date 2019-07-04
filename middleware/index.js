@@ -1,3 +1,4 @@
-let isLogout = require('./isLogout')
+let isLogin = require('./isLogin')
+let admin = require('./adminLogin')
 
-module.exports = {isLogout}
+module.exports = {isLogin, admin}

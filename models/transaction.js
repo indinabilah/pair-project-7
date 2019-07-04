@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
   const Model = sequelize.Sequelize.Model
   class Transaction extends Model{
     static associate(models){
-      Transaction.belongsToMany(models.Movie, {through: "Tiket"})
+      Transaction.belongsTo(models.User)
+      Transaction.belongsToMany(models.Movie, {through: "Ticket"})
     }
   }
   Transaction.init({
