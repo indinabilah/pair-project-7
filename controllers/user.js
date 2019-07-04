@@ -5,6 +5,9 @@ class User{
         res.render("user-login.ejs")
     }
     static getAdminPage(req, res){
+        if(!req.session.user){
+            res.redirect('/user/login')
+        }
         res.render("user-admin.ejs")
     }
     static getRegister(req, res){
@@ -31,13 +34,26 @@ class User{
                 where:{ email: req.body.email}
             })
             .then(data => {
-                // res.send(data)
                 newData = data
                 if(data.role === "admin" && data.password === req.body.password){
                     res.render("user-admin.ejs", {data: 'Berhasil Login!', dataFind: newData})
                 }else if(bcrypt.compareSync(req.body.password,data.password)){
                     //data.password === req.body.password
                     res.render("home.ejs", {data: 'Berhasil Login!', dataFind: newData})
+                    newData = data
+                if(data.role === "admin" && data.password === req.body.password){
+                        req.session.user = {
+                            id: data.id,
+                            name: data.name
+                        }
+                    res.render("user-admin.ejs", {data: 'Berhasil Login!', dataFind: newData})
+                }else if(bcrypt.compareSync(req.body.password,data.password)){
+                    req.session.user = {
+                        id: data.id,
+                        name: data.name
+                    }
+                    res.redirect("/movie/list")
+                    // console.log(req.session, 'login session')
                 }else{
                     res.render("user-login.ejs", {data: 'Gagal Login. email & password salah'})
                 }

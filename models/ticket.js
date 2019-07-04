@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     price:{
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    seat:{
+      type: DataTypes.STRING,
+      allowNull: true
     }
   }, {sequelize})
   return Ticket;
