@@ -34,26 +34,19 @@ class User{
                 where:{ email: req.body.email}
             })
             .then(data => {
-                // // res.send(data)
-                // req.session.user = {
-                    //     id: data.id,
-                    //     name: data.name
-                    // }
-                    // res.send(req.session)
                     newData = data
-                if(data.role === "admin" && data.password === req.body.password){
+                if(data.role === "admin" && bcrypt.compareSync(req.body.password,data.password)){
                         req.session.user = {
                             id: data.id,
                             name: data.name
                         }
                     res.render("user-admin.ejs", {data: 'Berhasil Login!', dataFind: newData})
                 }else if(bcrypt.compareSync(req.body.password,data.password)){
-                    //data.password === req.body.password
                     req.session.user = {
                         id: data.id,
                         name: data.name
                     }
-                    res.redirect("/movie/list")
+                    res.render("home.ejs", {data: 'Berhasil Login!', dataFind: {name:data.name}})
                     // console.log(req.session, 'login session')
                 }else{
                     res.render("user-login.ejs", {data: 'Gagal Login. email & password salah'})
@@ -67,21 +60,59 @@ class User{
         }
     }
     static logout(req, res){
-        // setInterval(()=>{
-        //     req.session.destroy()
-        //     res.redirect("/")
-        // },1000)
         req.session.destroy(function(err){
             console.log('session')
             res.redirect("/user/login")
         })
-
-        console.log('after session')
     }
     static list(req, res){
         Model.User.findAll()
         .then(data => {
             res.render("user-admin-list.ejs", {dataFind: data})
+        })
+        .catch(err => {
+            res.send(err.message)
+        })
+    }
+    static updateGet(req, res){
+        let dataUpdate
+        let dataFind
+        Model.User.findOne({
+            where: {id: req.params.id}
+        })
+        .then(data => {
+            dataUpdate = data
+            return Model.User.findAll()
+        })
+        .then(data2 => {
+            dataFind = data2
+            res.render("user-admin-listUpdate", {dataUpdate, dataFind})
+        })
+        .catch(err => {
+            res.send(err.message)
+        })
+    }
+    static update(req, res){
+        Model.User.update(
+            {name: req.body.name,
+             email: req.body.email,
+             role: req.body.role,
+             password: req.body.password}, 
+            { where: {id: req.params.id} }
+        )
+        .then(data => {
+            res.redirect("/user/list")
+        })
+        .catch(err => {
+            res.send(err.message)
+        })
+    }
+    static delete(req, res){
+        Model.User.destroy({
+            where: {id: req.params.id}
+        })
+        .then(data => {
+            res.redirect("/user/list")
         })
         .catch(err => {
             res.send(err.message)

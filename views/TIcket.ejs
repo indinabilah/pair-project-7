@@ -142,12 +142,17 @@
     </center>
     <center>
         <form action="/ticket/addTicket" method="GET">
+            <label for="title">Movie Title: </label><br>
+            <h3><label for="movie_name"><%= dataMovie.movie_name %></label></h3><br>
+            <%if(dataMovie.image){%>
+              <img src="<%= dataMovie. image%>" class="mx-auto d-block" style="width:10%"><br>
+            <%}else{%>
+              <img src="https://lumiere-a.akamaihd.net/v1/images/p_toystory4_e8af7b4d.jpeg?region=0,0,540,810" class="mx-auto d-block" style="width:10%"><br>
+            <%}%>
             <label for="name">Name: </label><br>
             <input type="text" name="name" disabled value="<%= dataMovie.name %>"> <br>
             <label for="seat">Seat: </label><br>
             <input type="text" id="selectedSeats" disabled name="seat" > <br>
-            <label for="title">Movie Title: </label><br>
-            <h3><label for="movie_name"><%= dataMovie.movie_name %></label></h3><br>
             <br>
             <label for="total_price">Total Price: </label>
             <input type="number" name="total_price" disabled id="PriceMovie" value="<%= dataMovie.price %>"> <br>

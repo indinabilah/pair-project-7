@@ -1,23 +1,46 @@
 let Model = require("../models/index")
 
 class Movie{
-    static findAll(req, res){
-        console.log(req.session, 'session di movie')
+    static forHome(req, res){
         Model.Movie.findAll()
         .then(data => {
             // res.send(data)
+            console.log(data)
+            res.render("home.ejs", {data})
+        })
+        .catch(err => {
+            res.send(err.message)
+        })
+    }
+    static findAll(req, res){
+        Model.Movie.findAll()
+        .then(data => {
             res.render("movie-all.ejs", {dataMovie: data, dataFind: {name: null}})
         })
         .catch(err => {
             res.send(err.message)
         })
     }
+    static findAll2(req, res){
+        Model.Movie.findAll()
+        .then(data => {
+            res.render("movie-all-admin.ejs", {dataMovie: data, dataFind: {name: null}})
+        })
+        .catch(err => {
+            res.send(err.message)
+        })
+    }
+    static listAdmin(req, res){
+        Model.Movie.findAll()
+        .then(data => {
+            res.render("movie-all-admin.ejs", {dataMovie: data, dataFind: {name: null}})
+        })
+        .catch(err => {
+            res.send(err.message)
+        })
+    }
     static RenderFormAdmin(req,res){
-        let idMovie = 0
-        if(req.params.id){
-            idMovie = req.params.id
-        }
-        Movie.findAll()
+        Model.Movie.findAll()
         .then((movie)=>{
             res.render('Form-Admin.ejs' , {movie , idMovie : idMovie })
         })
@@ -27,39 +50,48 @@ class Movie{
     }
 
     static AddMovie(req,res){
-        Movie.create({
-            movie_name : req.body.movie,
-            price : req.body.price
+        Model.Movie.create({
+            movie_name : req.body.movie_name,
+            price : req.body.price,
+            image: req.body.image
         })
         .then((movie)=>{
-            res.redirect('/movie/list/0')
+            res.redirect('/movie/list/admin')
         })
     }
-
+    static findOne(req, res){
+        Model.Movie.findOne({
+            where: {id: req.params.id}
+        })
+        .then(data => {
+            res.render("movie-update", {data})
+        })
+        .catch(err => {
+            res.send(err.message)
+        })
+    }
    static EditMovie(req,res){
-       console.log(req.query)
-       console.log(req.body)
-       Movie.update({
+       Model.Movie.update({
         movie_name : req.body.movie,
-        price : req.body.price
+        price : req.body.price,
+        image: req.body.image
        },{
         where : {
             id : req.params.id
         }
        })
        .then((PL)=>{
-            res.redirect('/movie/list/0')
+            res.redirect('/movie/list/admin')
        })
    }
-
    static DeleteMovie(req,res){
-       Movie.destroy({
+       Model.Movie.destroy({
            where : {
                id : req.params.id
            }
        })
        .then((hasil)=>{
-           res.redirect('/movie/list/0')
+           res.redirect('/movie/list/admin')
        })
    }
 }

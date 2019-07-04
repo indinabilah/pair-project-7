@@ -11,5 +11,8 @@ router.post("/user/login", Controller.login)
 router.get("/user/logout", Controller.logout)
 router.get("/user/list", Controller.list)
 router.get("/user/admin", Controller.getAdminPage)
+router.get("/user/update/:id", Controller.updateGet)
+router.post("/user/update/:id", Controller.update)
+router.get("/user/delete/:id", Controller.delete)
 
 module.exports = router

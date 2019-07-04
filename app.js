@@ -1,10 +1,11 @@
 const express = require('express')
 const app = express()
-const port = 3001
+const port = 3000
 const router = require('./routes/all-router')
 
 const session = require('express-session')
 
+app.set('view engine', 'ejs')
 app.use(express.urlencoded({extended: false}))
 app.listen(port, () => console.log(`Server port ${port} is running`))
 
@@ -22,7 +23,6 @@ app.get("/logout", (req, res)=>{
     req.session.destroy(err => {
         res.redirect("/user/login")
     })
-    // res.send(["Berhasil logout!"])
 })
 
 app.use("/", router.User)

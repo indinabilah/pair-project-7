@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Document</title>
+    <%- include('partials/css-login-register.ejs')%>
+</head>
+<body>
+    <%- include('partials/navbar-admin.ejs') %>
+    <p>user-admin-Movie</p>
+    <div class="container">
+        <table class="table table-bordered">
+            <tr>
+                <th>ID</th>
+                <th>Movie Name</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+            <% movie.map((hasil)=>{ %>
+                <% if(hasil.dataValues.id == idMovie) { %>
+                    <tr>
+                        <form action="/movie/edit/<%= hasil.dataValues.id %>" method="POST">
+                            <th><%= hasil.dataValues.id %></th>
+                            <th><br><input type="text"  value="<%= hasil.dataValues.movie_name %>" name="movie"></th>
+                            <th><br><input type="number"  value="<%= hasil.dataValues.price %>"  name="price" ></th>
+                            <th><input type="submit" value="SAVE"></th>
+                            <th><a href="/movie/list/">Cancel</a></th>
+                        </form>
+                    </tr>
+                <% } else {%>
+                    <tr>
+                        <th><%= hasil.dataValues.id %></th>
+                        <th><%= hasil.dataValues.movie_name %></th>
+                        <th><%= hasil.dataValues.price %></th>
+                        <th><a href="/movie/list/<%= hasil.dataValues.id %>">Edit</a></th>
+                        <th><a href="/movie/delete/<%= hasil.dataValues.id %>">Delete</a></th>
+                    </tr>
+                <% }%>
+            
+            <% }) %>
+        </table>
+    </div>
+    <div class="container">
+        <form action="/movie/add" method="post">
+            <label for="">Movie Name</label><br>
+            <input type="text" name="movie_name" placeholder="input movie name"><br>
+            <label for="">Price</label><br>
+            <input type="text" name="price" placeholder="input movie price"><br>
+            <button type="submit" class="btn btn-info">add</button>
+        </form>
+    </div>
+</body>
+</html>

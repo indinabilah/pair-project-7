@@ -10,9 +10,13 @@
     <title>Document</title>
 </head>
 <body>
-        <%- include('partials/navbar.ejs') %>
+        <%- include('partials/navbar-admin.ejs') %>
     <center>
-        <p>halaman movie all</p>
+        <a href="/movie/add" class="btn btn-secondary">add Movie into list</a>
+        <br>
+        <br>
+        <br>
+        <br>
         <div class="container">
           <div class="row">
               <% dataMovie.forEach(el => {%>
@@ -23,7 +27,7 @@
                 <img src="https://lumiere-a.akamaihd.net/v1/images/p_toystory4_e8af7b4d.jpeg?region=0,0,540,810" class="mx-auto d-block" style="width:30%">
               <%}%>
               <h3><%= el.movie_name %></h3>
-              <a href="/ticket/<%= el.id %>">Buy Ticket</a>
+              <a href="/movie/update/<%= el.id %>">Update</a> | <a href="/movie/delete/<%= el.id %>">Delete</a>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
               <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
             </div>
@@ -32,15 +36,6 @@
         </div>
     </center>
 </body>
-<script>
-  function openForm() {
-        document.getElementById("myForm").style.display = "block";
-    }
-
-    function closeForm() {
-        document.getElementById("myForm").style.display = "none";
-    }
-</script>
 </html>
 
 
