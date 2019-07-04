@@ -18,7 +18,6 @@ app.use(session({
         maxAge: 100
      }
 }))
-
 app.get("/logout", (req, res)=>{
     req.session.destroy(err => {
         res.redirect("/user/login")
